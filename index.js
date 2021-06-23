@@ -46,9 +46,10 @@ const time = moment().tz('Asia/Jakarta').format("HH:mm:ss")
 const arrayBulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
 const bulan = arrayBulan[moment().format('MM') - 1]
 const config = {
-    XBOT: 'INFLUENCER BOT 📱', 
-    instagram: 'https://www.instagram.com/eu__jhon?r=nametag', 
-    nomer: 'wa.me/5586999111388', 
+    XBOT: 'ᏴϴͲ ᎠႮ ᏦᎬᏦᎬ', 
+    instagram: 'https://www.instagram.com/kaic_de_paula?r=nametag', 
+    nomer: 'wa.me/5511973027044',
+    youtube: 'https://youtube.com/channel/UC2a7N-vZ5xrDF-0nfcaUspw', 
     whatsapp: 'Comming soon', 
     tanggal: `TANGGAL: ${moment().format('DD')} ${bulan} ${moment().format('YYYY')}`,
     waktu: time
@@ -100,16 +101,22 @@ client.on('group-participants-update', async (anu) => {
 			console.log(anu)
 			if (anu.action == 'add') {
 				num = anu.participants[0]
-				try 
-
-				teks = `Olá @${num.split('@')[0]}\ seja-bem vindx ao grupo, espero que possamos te ajudar à crescer! Assim que ler está msg, entre no grp a seguir: https://chat.whatsapp.com/lgimGrnclNb8bQWFpLGUHg .\n\nATT.: a Administração.`
+				try {
+					ppimg = await client.getProfilePicture(`${anu.participants[0].split('@')[0]}@c.us`)
+				} catch {
+					ppimg = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
+				}
+				teks = `Oiee @${num.split('@')[0]}\ seja bem vindx ao grupo *${mdata.subject}* espero que possamos te ajudar à crescer! Assim q vc ler está msg, entre no grupo a seguir: https://chat.whatsapp.com/lgimGrnclNb8bQWFpLGUHg .\n\nATT.: A Administração (●'◡'●)`
 				let buff = await getBuffer(ppimg)
 				client.sendMessage(mdata.id, buff, MessageType.image, {caption: teks, contextInfo: {"mentionedJid": [num]}})
 			} else if (anu.action == 'remove') {
 				num = anu.participants[0]
-				try 
-
-				teks = `Tchau @${num.split('@')[0]}!!`
+				try {
+					ppimg = await client.getProfilePicture(`${num.split('@')[0]}@c.us`)
+				} catch {
+					ppimg = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
+				}
+				teks = `Tchau @${num.split('@')[0]} 👋🏻`
 				let buff = await getBuffer(ppimg)
 				client.sendMessage(mdata.id, buff, MessageType.image, {caption: teks, contextInfo: {"mentionedJid": [num]}})
 			}
@@ -144,18 +151,18 @@ client.on('group-participants-update', async (anu) => {
 			const isCmd = body.startsWith(prefix)
 
 			mess = {
-				wait: '❬❗❭ AGUARDE UM POUQUINHO (CASO DEMORE, É PQ DEU ERRO) ❬❗❭',
+				wait: '❬❗❭ AGUARDE UM POUQUINHO (CASO DEMORE DEU ERRO) ❬❗❭',
 				success: '️❬ ✔ ❭ PRONTINHO.',
 				error: {
 					stick: 'Erro. Dclps 😐',
 					Iv: 'Desculpe, o link está inválido ☹️'
 				},
 				only: {
-					group: '❬❗❭ Apenas o dono do grupo pode usar este comando ',
-					ownerG: '❬❗❭ Apenas o dono do grupo pode usar este comando ',
-					ownerB: '❬❗❭  Apenas o dono do grupo pode usar este comando ',
-					admin: '❬❗❭ Apenas o dono do grupo pode usar este comando ',
-					Badmin: '❬❗❭ O bot precisa ser administrador 🙃'
+					group: '❬❗❭ Apenas o dono do grupo pode usar este comando ❬❗❭ ',
+					ownerG: '❬❗❭ Apenas o dono do grupo pode usar este comando ❬❗❭ ',
+					ownerB: '❬❗❭  Apenas o dono do grupo pode usar este comando ❬❗❭ ',
+					admin: '❬❗❭ Apenas o dono do grupo pode usar este comando ❬❗❭ ',
+					Badmin: '❬❗❭ O bot precisa ser administrador 🙃 '
 				}
 			}
 
@@ -198,7 +205,7 @@ client.on('group-participants-update', async (anu) => {
 			if (isCmd && isGroup) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(command), 'from', color(sender.split('@')[0]), 'in', color(groupName), 'args :', color(args.length))
 			if (!isCmd && isGroup) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;31mRECV\x1b[1;37m]', time, color('Message'), 'from', color(sender.split('@')[0]), 'in', color(groupName), 'args :', color(args.length))
 			switch(command) {
-          case 'botstat': {
+                              case 'botstat': {
             const loadedMsg = await client.getAmountOfLoadedMessages()
             const chatIds = await client.getAllChatIds()
             const groups = await client.getAllGroups()
@@ -213,16 +220,15 @@ client.on('group-participants-update', async (anu) => {
 				case 'menu':
 					client.sendMessage(from, help(prefix), text)
 					break
-                
 				case 'info':
 					me = client.user
 					uptime = process.uptime()
-					teks = `-> Nome do bot: ${me.name}\n*-> Numero do bot*: @${me.jid.split('@')[0]}\n*-> Sigla dos comandos*: ${prefix}\n-> Numeros bloqueados: ${blocked.length}\n-> Bot ativo desde: ${kyun(uptime)}\n`
+					teks = `Nome do bot: ${me.name}\n*Numero do bot*: @${me.jid.split('@')[0]}\n*Sigla dos comandos*: ${prefix}\nNumeros bloqueados: ${blocked.length}\nO bot esta ativo desde: ${kyun(uptime)}\n`
 					buffer = await getBuffer(me.imgUrl)
 					client.sendMessage(from, buffer, image, {caption: teks, contextInfo:{mentionedJid: [me.jid]}})
 					break
 				case 'blocklist': 
-					teks = 'LISTA DE CONTTS BLOQUEADOS: \n'
+					teks = 'LISTA DE CONTTS BLOQUEADOS:\n'
 					for (let block of blocked) {
 						teks += `┣➢ @${block.split('@')[0]}\n`
 					}
@@ -255,7 +261,7 @@ client.on('group-participants-update', async (anu) => {
                      const pesan = body.slice(5)
                       if (pesan.length > 300) return client.sendMessage(from, 'Desculpe, o texto é muito longo, máximo de 300 letras', msgType.text, {quoted: mek})
                         var nomor = mek.participant
-                       const teks1 = `*[REPORT]*\nNome: @${nomor.split("@s.whatsapp.net")[0]}\nMensagm: ${pesan}`
+                       const teks1 = `*[REPORT]*\nNomor : @${nomor.split("@s.whatsapp.net")[0]}\nPesan : ${pesan}`
                       var options = {
                          text: teks1,
                          contextInfo: {mentionedJid: [nomor]},
@@ -263,13 +269,13 @@ client.on('group-participants-update', async (anu) => {
                     client.sendMessage('5586999111388@s.whatsapp.net', options, text, {quoted: mek})
                     reply('Problema relatado ao proprietário do BOT, relatórios falsos não serão respondidos.')
                     break
-		               case 'text3d':
+                case 'text3d':
               	    if (args.length < 1) return reply('qual txt lindx??')
                     teks = `${body.slice(8)}`
-                    if (teks.length > 10) return client.sendMessage(from, 'limite de 10 letras', text, {quoted: mek})
+                    if (teks.length > 10) return client.sendMessage(from, 'Limite de 10 letras', text, {quoted: mek})
                     buff = await getBuffer(`https://docs-jojo.herokuapp.com/api/text3d?text=${teks}`, {method: 'get'})
                     client.sendMessage(from, buff, image, {quoted: mek, caption: `${teks}`})
-			     	break  
+			     	break
 				case 'ocr': 
 					if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
 						const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
@@ -285,7 +291,7 @@ client.on('group-participants-update', async (anu) => {
 								fs.unlinkSync(media)
 							})
 					} else {
-						reply('Escolha a foto para pegar os txt ${prefix} >-<')
+						reply('Escolha a foto para pegar os txt dela ${prefix} >-<')
 					}
 					break
 				case 'stiker': 
@@ -329,7 +335,7 @@ client.on('group-participants-update', async (anu) => {
 								console.log(`Error : ${err}`)
 								fs.unlinkSync(media)
 								tipe = media.endsWith('.mp4') ? 'video' : 'gif'
-								reply(`Yah gagal ;(, tente dnovo ^_^`)
+								reply(`😖... tente dnvo ^_^`)
 							})
 							.on('end', function () {
 								console.log('Finish')
@@ -342,7 +348,7 @@ client.on('group-participants-update', async (anu) => {
 							.toFormat('webp')
 							.save(ran)
 					} else {
-						reply(`Envie uma fto/gif com a legenda: *${prefix}sticker* ou só responda a uma imagem com o msm comando.`)
+						reply(`Envie uma fto/gif com a legenda: *${prefix}sticker* ou só responda a uma imagem/gif com o msm comando.`)
 					}
 					break
 				case 'gtts':	
@@ -359,7 +365,7 @@ client.on('group-participants-update', async (anu) => {
 						exec(`ffmpeg -i ${ranm} -ar 48000 -vn -c:a libopus ${rano}`, (err) => {
 							fs.unlinkSync(ranm)
 							buff = fs.readFileSync(rano)
-							if (err) return reply('Erro. Tente novamente!')
+							if (err) return reply('Erro. Tente novamente mais tarde!')
 							client.sendMessage(from, buff, audio, {quoted: mek, ptt:true})
 							fs.unlinkSync(rano)
 						})
@@ -391,58 +397,52 @@ client.on('group-participants-update', async (anu) => {
 					for (let _ of anu) {
 						client.deleteChat(_.jid)
 					}
-					reply('esta limpo mestre  :)')
+					reply('Está limpo chefe (⌐■_■)')
 					break
 			       case 'block':
 					if (!isGroup) return reply(mess.only.group)
 					if (!isOwner) return reply(mess.only.ownerB)
 					client.blockUser (`${body.slice(7)}@c.us`, "add")
-					client.sendMessage(from, `membro bloqueado ${body.slice(7)}@c.us`, text)
+					client.sendMessage(from, `Membro bloqueado ${body.slice(7)}@c.us`, text)
 					break
                     case 'unblock':
 					if (!isGroup) return reply(mess.only.group)
 					if (!isOwner) return reply(mess.only.ownerB)
 				    client.blockUser (`${body.slice(9)}@c.us`, "remove")
-					client.sendMessage(from, `membro desbloqueado ${body.slice(9)}@c.us`, text)
+					client.sendMessage(from, `Membro desbloqueado ${body.slice(9)}@c.us`, text)
 				break
-				case 'leave': 
-				if (!isGroup) return reply(mess.only.group)
-					if (!isOwner) return reply(mess.only.ownerB)
-				await client.client.leaveGroup(from, 'adeus...', groupId)
-                    break
 			   	case 'setpp': 
                         if (!isGroup) return reply(mess.only.group)
                        if (!isGroupAdmins) return reply(mess.only.admin)
                         if (!isBotGroupAdmins) return reply(mess.only.Badmin)
                        media = await client.downloadAndSaveMediaMessage(mek)
                          await client.updateProfilePicture (from, media)
-                        reply('pronto')
+                        reply('Pronto!')
                 break						
 				case 'add':
 					if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.admin)
 					if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-					if (args.length < 1) return reply('nao tenho bola de cristal pra adivinhar quem vc quer add Aki')
-					if (args[0].startsWith('08')) return reply('qual cod do pais?? ')
+					if (args.length < 1) return reply('Não tenho bola de cristal pra adivinhar quem vc quer add aki 🙄')
+					if (args[0].startsWith('08')) return reply('Qual cod do pais?? ')
 					try {
 						num = `${args[0].replace(/ /g, '')}@s.whatsapp.net`
 						client.groupAdd(from, [num])
 					} catch (e) {
 						console.log('Error :', e)
-						reply('Falha ao adicionar, talvez porque seja privado')
+						reply('Falha ao adicionar, talvez o whats delx esteja privado.')
 					}
 					break
 					case 'grup':
 					case 'group':
-                                        case 'grp':
 					if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.admin)
 					if (!isBotGroupAdmins) return reply(mess.only.Badmin)
 					if (args[0] === 'buka') {
-					    reply(`Grupo aberto para membros 🔓`)
+					    reply(`*Grupo aberto para membros 🔓*`)
 						client.groupSettingChange(from, GroupSettingChange.messageSend, false)
 					} else if (args[0] === 'tutup') {
-						reply(`Grupo privado 🔒. SOMENTE ADM'S PODEM MANDAR MSGS!`)
+						reply(`Grupo privado 🔒. SOMENTE ADMs PODEM MANDAR MSGS!`)
 						client.groupSettingChange(from, GroupSettingChange.messageSend, true)
 					}
 					break
@@ -458,31 +458,31 @@ client.on('group-participants-update', async (anu) => {
 			    if (!isGroupAdmins) return reply(mess.only.admin)
 				if (!isBotGroupAdmins) return reply(mess.only.Badmin)
                 client.groupUpdateSubject(from, `${body.slice(9)}`)
-                client.sendMessage(from, 'Nome do grupo alterado cm sucesso', text, {quoted: mek})
+                client.sendMessage(from, 'Nome do grupo alterado cm sucesso ✅', text, {quoted: mek})
                 break
                 case 'setdesc':
                 if (!isGroup) return reply(mess.only.group)
 			    if (!isGroupAdmins) return reply(mess.only.admin)
 				if (!isBotGroupAdmins) return reply(mess.only.Badmin)
                 client.groupUpdateDescription(from, `${body.slice(9)}`)
-                client.sendMessage(from, 'descricao trocada cm sucesso', text, {quoted: mek})
+                client.sendMessage(from, 'Descrição trocada cm sucesso ✅', text, {quoted: mek})
                 break
            case 'demote':
 					if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.admin)
 					if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-					if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('marca a pessoa pra tirar o ADM')
+					if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('Marca a pessoa pra tirar o ADM.')
 					mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
 					if (mentioned.length > 1) {
 						teks = ''
 						for (let _ of mentioned) {
-							teks += `Perdeu o cargo`
+							teks += `Perdeu o cargo 😶:\n`
 							teks += `@_.split('@')[0]`
 						}
 						mentions(teks, mentioned, true)
 						client.groupDemoteAdmin(from, mentioned)
 					} else {
-						mentions(`@${mentioned[0].split('@')[0]} não é mais ADM`, mentioned, true)
+						mentions(`@${mentioned[0].split('@')[0]} não é mais ADM.`, mentioned, true)
 						client.groupDemoteAdmin(from, mentioned)
 					}
 					break
@@ -490,12 +490,12 @@ client.on('group-participants-update', async (anu) => {
 					if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.admin)
 					if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-					if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('marca a pessoa pra ter ADM')
+					if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('Marca a pessoa pra dar ADM.')
 					mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
 					if (mentioned.length > 1) {
 						teks = ''
 						for (let _ of mentioned) {
-							teks += `Novo ADM\n`
+							teks += `Novo ADM:\n`
 							teks += `@_.split('@')[0]`
 						}
 						mentions(teks, mentioned, true)
@@ -509,7 +509,7 @@ client.on('group-participants-update', async (anu) => {
 					if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.admin)
 					if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-					if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('marque a pessoa q deseja remover')
+					if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('Marque a pessoa q deseja remover.')
 					mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
 					if (mentioned.length > 1) {
 						teks = ''
@@ -535,16 +535,16 @@ client.on('group-participants-update', async (anu) => {
 					mentions(teks, groupAdmins, true)
 					break
 				case 'toimg':
-					if (!isQuotedSticker) return reply('Marca a fig inteligente ksksksks')
+					if (!isQuotedSticker) return reply('Marca a fig inteligente rsrsrsrs')
 					reply(mess.wait)
 					encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo
 					media = await client.downloadAndSaveMediaMessage(encmedia)
 					ran = getRandom('.png')
 					exec(`ffmpeg -i ${media} ${ran}`, (err) => {
 						fs.unlinkSync(media)
-						if (err) return reply('algo de erro ;(, tente dnovo dps ^_^')
+						if (err) return reply('Erro. Tente novamente mais tarde!')
 						buffer = fs.readFileSync(ran)
-						client.sendMessage(from, buffer, image, {quoted: mek, caption: 'tchau entt '})
+						client.sendMessage(from, buffer, image, {quoted: mek, caption: '😎'})
 						fs.unlinkSync(ran)
 					})
 					break
@@ -553,14 +553,14 @@ client.on('group-participants-update', async (anu) => {
 					if (!isGroupAdmins) return reply(mess.only.admin)
 					if (args.length < 1) return reply('1 ou 0')
 					if (Number(args[0]) === 1) {
-						if (isWelkom) return reply('ativado !!!')
+						if (isWelkom) return reply('Ativado ✅')
 						welkom.push(from)
 						fs.writeFileSync('./src/welkom.json', JSON.stringify(welkom))
-						reply('❬ pronto ❭')
+						reply('❬✅❭ *Pronto*')
 					} else if (Number(args[0]) === 0) {
 						welkom.splice(from, 1)
 						fs.writeFileSync('./src/welkom.json', JSON.stringify(welkom))
-						reply('❬ pronto ❭ ')
+						reply('✅')
 					} else {
 						reply(' *Use 1 para ativar ou 0 para desativar* \n *Exemplo: ${prefix}welcome 1*')
 					}
