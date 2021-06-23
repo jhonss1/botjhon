@@ -102,7 +102,7 @@ client.on('group-participants-update', async (anu) => {
 				num = anu.participants[0]
 				try 
 
-				teks = `Olá @${num.split('@')[0]}\ seja-bem vindx ao grupo, espero que possamos te ajudar à crescer!\nLogo que possível algum ADM irá te atender e explicar tudo com tds os detalhes possíveis.\n\nATT.: a Administração.`
+				teks = `Olá @${num.split('@')[0]}\ seja-bem vindx ao grupo, espero que possamos te ajudar à crescer!\nAssim que ver está mensagem, entre no grp à seguir: https://chat.whatsapp.com/IgimGrnclNb8bQWFpLGUHg .`
 				let buff = await getBuffer(ppimg)
 				client.sendMessage(mdata.id, buff, MessageType.image, {caption: teks, contextInfo: {"mentionedJid": [num]}})
 			} else if (anu.action == 'remove') {
