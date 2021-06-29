@@ -106,7 +106,7 @@ client.on('group-participants-update', async (anu) => {
 				} catch {
 					ppimg = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
 				}
-				teks = `Oiee @${num.split('@')[0]}\ seja bem vindx ao grupo *${mdata.subject}* espero que possamos te ajudar à crescer! Assim q vc ler está msg, entre no grupo a seguir: https://chat.whatsapp.com/lgimGrnclNb8bQWFpLGUHg .\n\nATT.: A Administração (●'◡'●)`
+				teks = `Oiee @${num.split('@')[0]}\ seja bem vindx ao grupo *${mdata.subject}* espero que possamos te ajudar à crescer! Logo logo, algum dos nossos ADMs irá entrar em contt com vc, aqui msm pelo grp ou no privado... desde já, agradecemos pela sua cooperação.\n\nATT.: A Administração (●'◡'●)`
 				let buff = await getBuffer(ppimg)
 				client.sendMessage(mdata.id, buff, MessageType.image, {caption: teks, contextInfo: {"mentionedJid": [num]}})
 			} else if (anu.action == 'remove') {
